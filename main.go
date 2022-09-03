@@ -49,7 +49,7 @@ func main() {
 func colision(prec rl.Rectangle, mouse rl.Vector2, p *pizza.Pizza) {
 	if rl.CheckCollisionPointRec(mouse, prec) {
 		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
-			pizzaCount += 1
+			pizzaCount += .1
 			p.IsPizzaClicked = true
 		}
 	}

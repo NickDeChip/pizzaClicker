@@ -46,7 +46,7 @@ func (p *Pizza) Setup() {
 
 func (p *Pizza) Draw(pizzacount float64) {
 	rl.DrawTextureRec(*pizzaTexture, p.Rec, rl.NewVector2(p.x, p.y), rl.White)
-	rl.DrawText(fmt.Sprintf("Pizzas: %f", pizzacount), 40, 10, 50, rl.White)
+	rl.DrawText(fmt.Sprintf("Pizzas: %.1f", pizzacount), 40, 10, 50, rl.White)
 }
 
 func (p *Pizza) Update() {
