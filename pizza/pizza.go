@@ -56,21 +56,20 @@ func (p *Pizza) Update() {
 func (p *Pizza) Animation() {
 	p.animationspeed += rl.GetFrameTime()
 
-	if p.IsPizzaClicked {
-		if p.animationspeed >= 0.1 {
-			p.animationspeed = 0
-			if p.currentPizzaFrame == 0 {
-				p.currentPizzaFrame = 1
-			} else if p.currentPizzaFrame == 1 {
-				p.currentPizzaFrame = 2
-			} else if p.currentPizzaFrame == 2 {
-				p.currentPizzaFrame = 3
-			} else if p.currentPizzaFrame == 3 {
-				p.currentPizzaFrame = 0
-			}
-
+	if p.animationspeed >= 0.025 && p.IsPizzaClicked {
+		p.animationspeed = 0
+		switch p.currentPizzaFrame {
+		case 0:
+			p.currentPizzaFrame = 1
+		case 1:
+			p.currentPizzaFrame = 2
+		case 2:
+			p.currentPizzaFrame = 3
+		case 3:
+			p.currentPizzaFrame = 0
 			p.IsPizzaClicked = false
-			p.Rec.X = ((p.Rec.Width) * float32(p.currentPizzaFrame))
 		}
+
+		p.Rec.X = ((p.Rec.Width) * float32(p.currentPizzaFrame))
 	}
 }
