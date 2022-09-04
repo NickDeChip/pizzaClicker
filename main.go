@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/NickDeChip/pizzaClicker/enity"
 	"github.com/NickDeChip/pizzaClicker/mouse"
 	"github.com/NickDeChip/pizzaClicker/pizza"
@@ -14,6 +16,7 @@ const ScreenY = 450
 
 func main() {
 	rl.InitWindow(ScreenX, ScreenY, "PizzaClicker")
+	rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(rl.GetCurrentMonitor())))
 
 	state := &state.State{
 		PizzaCount: 0,
@@ -31,19 +34,21 @@ func main() {
 	rl.HideCursor()
 
 	for !rl.WindowShouldClose() {
+		fmt.Printf("%.3f\n", enity.TW.Cost)
+		state.DT = rl.GetFrameTime()
 		state.Timer += state.DT
 
 		if rl.IsKeyPressed(rl.KeyF) {
 			state.FPScap = !state.FPScap
-		}
-		if state.FPScap {
-			rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(rl.GetCurrentMonitor())))
-		} else {
-			rl.SetTargetFPS(0)
+			if state.FPScap {
+				rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(rl.GetCurrentMonitor())))
+			} else {
+				rl.SetTargetFPS(0)
+			}
 		}
 
-		upgradeColision(enity.TW.Rec, enity.Mouse.Position, &enity.TW)
-		enity.TW.Update(state, enity)
+		upgradeColision(enity.TW.Rec, enity.Mouse.Position, &enity.TW, state)
+		enity.TW.Update(state)
 
 		enity.Mouse.Update()
 		pizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, &enity.BigPizza, state)
@@ -73,10 +78,14 @@ func pizzaColision(prec rl.Rectangle, mouse rl.Vector2, p *pizza.Pizza, state *s
 	}
 }
 
-func upgradeColision(urec rl.Rectangle, mouse rl.Vector2, u *teenworker.Worker) {
+func upgradeColision(urec rl.Rectangle, mouse rl.Vector2, u *teen_worker.Worker, state *state.State) {
 	if rl.CheckCollisionPointRec(mouse, urec) {
 		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
-			u.Count += 1
+			if state.PizzaCount >= u.Cost {
+				state.PizzaCount -= u.Cost
+				u.Count += 1
+				u.Cost *= 1.1
+			}
 		}
 	}
 }

@@ -8,9 +8,9 @@ import (
 var texture *rl.Texture2D
 
 type Worker struct {
-	Count float64
+	Count int
 	Gain  float64
-	cost  float64
+	Cost  float64
 	x     float32
 	y     float32
 	Rec   rl.Rectangle
@@ -28,11 +28,11 @@ func New() *Worker {
 
 func (w *Worker) Setup() {
 	w.Count = 0
-	w.Gain = 1
-	w.cost = 20
+	w.Gain = 0.1
+	w.Cost = 20
 	w.x = 439
 	w.y = 0
-	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Width))
+	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))
 }
 
 func (w *Worker) Draw() {
@@ -42,7 +42,7 @@ func (w *Worker) Draw() {
 
 func (w *Worker) Update(state *state.State) {
 	if w.Count >= 1 && state.Timer >= 1 {
-		state.PizzaCount += w.Gain
-		state.DT = 0
+		state.PizzaCount += w.Gain * float64(w.Count)
+		state.Timer = 0
 	}
 }
