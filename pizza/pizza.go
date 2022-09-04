@@ -49,10 +49,6 @@ func (p *Pizza) Draw(pizzacount float64) {
 	rl.DrawText(fmt.Sprintf("Pizzas: %.1f", pizzacount), 40, 10, 50, rl.White)
 }
 
-func (p *Pizza) Update() {
-
-}
-
 func (p *Pizza) Animation() {
 	p.animationspeed += rl.GetFrameTime()
 
