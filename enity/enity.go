@@ -7,7 +7,7 @@ import (
 )
 
 type Enity struct {
-	BigPizza pizza.Pizza
-	Mouse    mouse.Mouse
-	TW       teen_worker.Worker
+	BigPizza *pizza.Pizza
+	Mouse    *mouse.Mouse
+	TW       *teen_worker.Worker
 }
