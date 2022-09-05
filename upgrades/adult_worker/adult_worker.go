@@ -1,4 +1,4 @@
-package teen_worker
+package adultworker
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ type Worker struct {
 
 func New() *Worker {
 	if texture == nil {
-		tex := rl.LoadTexture("Resources/teenworker.png")
+		tex := rl.LoadTexture("Resources/adultworker.png")
 		texture = &tex
 	}
 	worker := &Worker{}
@@ -30,16 +30,16 @@ func New() *Worker {
 
 func (w *Worker) Setup() {
 	w.Count = 0
-	w.Gain = 0.1
-	w.Cost = 20
+	w.Gain = 1
+	w.Cost = 100
 	w.x = 437
-	w.y = 0
+	w.y = 90
 	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))
 }
 
 func (w *Worker) Draw() {
 	rl.DrawTexture(*texture, int32(w.x), int32(w.y), rl.White)
-	rl.DrawText("Teen Workers", int32(w.x+100), int32(w.y+10), 24, rl.White)
+	rl.DrawText("Adult Workers", int32(w.x+100), int32(w.y+10), 24, rl.White)
 	rl.DrawText(fmt.Sprintf("Cost: %.2f", w.Cost), int32(w.x+100), int32(w.y+40), 20, rl.White)
 	rl.DrawText(fmt.Sprintf("Amount: %d", w.Count), int32(w.x+100), int32(w.y+65), 20, rl.White)
 }

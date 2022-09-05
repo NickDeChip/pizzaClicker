@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/NickDeChip/pizzaClicker/enity"
 	"github.com/NickDeChip/pizzaClicker/mouse"
 	"github.com/NickDeChip/pizzaClicker/pizza"
 	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/NickDeChip/pizzaClicker/upgrades"
+	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
 	"github.com/gen2brain/raylib-go/raylib"
 )
@@ -31,11 +30,11 @@ func main() {
 		BigPizza: pizza.New(),
 		Mouse:    mouse.New(),
 		TW:       teen_worker.New(),
+		AW:       adultworker.New(),
 	}
 	rl.HideCursor()
 
 	for !rl.WindowShouldClose() {
-		fmt.Printf("%.3f\n", enity.TW.Cost)
 		state.DT = rl.GetFrameTime()
 		state.Timer += state.DT
 
@@ -49,7 +48,14 @@ func main() {
 		}
 
 		upgradeColision(enity.TW.Rec, enity.Mouse.Position, enity.TW, state)
-		enity.TW.Update(state)
+		upgradeColision(enity.AW.Rec, enity.Mouse.Position, enity.AW, state)
+
+		if state.Timer >= 1 {
+			enity.TW.Update(state)
+			enity.AW.Update(state)
+
+			state.Timer = 0
+		}
 
 		enity.Mouse.Update()
 		pizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, enity.BigPizza, state)
@@ -62,6 +68,7 @@ func main() {
 		enity.BigPizza.Draw(state.PizzaCount)
 
 		enity.TW.Draw()
+		enity.AW.Draw()
 
 		enity.Mouse.Draw()
 
