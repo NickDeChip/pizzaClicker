@@ -10,20 +10,23 @@ import (
 var texture *rl.Texture2D
 
 type Worker struct {
-	Count int
-	Gain  float64
-	Cost  float64
-	x     float32
-	y     float32
-	Rec   rl.Rectangle
+	Count   int
+	Gain    float64
+	Cost    float64
+	x       float32
+	y       float32
+	Rec     rl.Rectangle
+	iconRec rl.Rectangle
+	tex     *rl.Texture2D
 }
 
-func New() *Worker {
+func New(US *rl.Texture2D) *Worker {
 	if texture == nil {
-		tex := rl.LoadTexture("Resources/adultworker.png")
+		tex := rl.LoadTexture("Resources/upgradebox.png")
 		texture = &tex
 	}
 	worker := &Worker{}
+	worker.tex = US
 	worker.Setup()
 	return worker
 }
@@ -33,12 +36,14 @@ func (w *Worker) Setup() {
 	w.Gain = 1
 	w.Cost = 100
 	w.x = 437
-	w.y = 90
+	w.y = 80
 	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))
+	w.iconRec = rl.NewRectangle(80, 0, float32(w.tex.Width/10), float32(w.tex.Height/10))
 }
 
 func (w *Worker) Draw() {
 	rl.DrawTexture(*texture, int32(w.x), int32(w.y), rl.White)
+	rl.DrawTextureRec(*w.tex, w.iconRec, rl.NewVector2(w.x+8, w.y+13), rl.White)
 	rl.DrawText("Adult Workers", int32(w.x+100), int32(w.y+10), 24, rl.White)
 	rl.DrawText(fmt.Sprintf("Cost: %.2f", w.Cost), int32(w.x+100), int32(w.y+40), 20, rl.White)
 	rl.DrawText(fmt.Sprintf("Amount: %d", w.Count), int32(w.x+100), int32(w.y+65), 20, rl.White)

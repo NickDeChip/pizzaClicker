@@ -17,6 +17,7 @@ const ScreenY = 450
 func main() {
 	rl.InitWindow(ScreenX, ScreenY, "PizzaClicker")
 	rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(rl.GetCurrentMonitor())))
+	upgradeSheet := rl.LoadTexture("Resources/upgradespritesheet.png")
 
 	state := &state.State{
 		PizzaCount: 0,
@@ -29,9 +30,10 @@ func main() {
 	enity := enity.Enity{
 		BigPizza: pizza.New(),
 		Mouse:    mouse.New(),
-		TW:       teen_worker.New(),
-		AW:       adultworker.New(),
+		TW:       teen_worker.New(&upgradeSheet),
+		AW:       adultworker.New(&upgradeSheet),
 	}
+
 	rl.HideCursor()
 
 	for !rl.WindowShouldClose() {
@@ -59,7 +61,6 @@ func main() {
 
 		enity.Mouse.Update()
 		pizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, enity.BigPizza, state)
-
 		enity.BigPizza.Animation()
 
 		rl.BeginDrawing()
