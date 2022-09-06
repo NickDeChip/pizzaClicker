@@ -7,6 +7,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
+	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
 	"github.com/gen2brain/raylib-go/raylib"
 )
@@ -20,11 +21,12 @@ func main() {
 	upgradeSheet := rl.LoadTexture("Resources/upgradespritesheet.png")
 
 	state := &state.State{
-		PizzaCount: 0,
-		FPScap:     true,
-		Background: rl.LoadTexture("Resources/PizzaClickerBackground.png"),
-		DT:         rl.GetFrameTime(),
-		Timer:      0,
+		PizzaCount:      0,
+		TotalPizzaCount: 0,
+		FPScap:          true,
+		Background:      rl.LoadTexture("Resources/PizzaClickerBackground.png"),
+		DT:              rl.GetFrameTime(),
+		Timer:           0,
 	}
 
 	enity := enity.Enity{
@@ -32,6 +34,7 @@ func main() {
 		Mouse:    mouse.New(),
 		TW:       teen_worker.New(&upgradeSheet),
 		AW:       adultworker.New(&upgradeSheet),
+		Necro:    necronomicon.New(),
 	}
 
 	rl.HideCursor()
@@ -58,6 +61,7 @@ func main() {
 
 			state.Timer = 0
 		}
+		enity.Necro.Update(state, enity.Mouse.Position)
 
 		enity.Mouse.Update()
 		pizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, enity.BigPizza, state)
@@ -70,6 +74,7 @@ func main() {
 
 		enity.TW.Draw()
 		enity.AW.Draw()
+		enity.Necro.Draw()
 
 		enity.Mouse.Draw()
 
@@ -82,6 +87,7 @@ func pizzaColision(prec rl.Rectangle, mouse rl.Vector2, p *pizza.Pizza, state *s
 	if rl.CheckCollisionPointRec(mouse, prec) {
 		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
 			state.PizzaCount += 1
+			state.TotalPizzaCount += 1
 			p.IsPizzaClicked = true
 		}
 	}

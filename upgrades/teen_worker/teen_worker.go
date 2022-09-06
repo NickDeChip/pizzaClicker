@@ -52,6 +52,7 @@ func (w *Worker) Draw() {
 func (w *Worker) Update(state *state.State) {
 	if w.Count >= 1 {
 		state.PizzaCount += w.Gain * float64(w.Count)
+		state.TotalPizzaCount += w.Gain * float64(w.Count)
 		state.Timer = 0
 	}
 }

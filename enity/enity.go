@@ -4,6 +4,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/mouse"
 	"github.com/NickDeChip/pizzaClicker/pizza"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
+	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
 )
 
@@ -12,4 +13,5 @@ type Enity struct {
 	Mouse    *mouse.Mouse
 	TW       *teen_worker.Worker
 	AW       *adultworker.Worker
+	Necro    *necronomicon.Necro
 }

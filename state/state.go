@@ -5,9 +5,10 @@ import (
 )
 
 type State struct {
-	PizzaCount float64
-	FPScap     bool
-	Background rl.Texture2D
-	DT         float32
-	Timer      float32
+	PizzaCount      float64
+	TotalPizzaCount float64
+	FPScap          bool
+	Background      rl.Texture2D
+	DT              float32
+	Timer           float32
 }
