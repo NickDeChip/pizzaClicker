@@ -34,7 +34,7 @@ func main() {
 		Mouse:    mouse.New(),
 		TW:       teen_worker.New(&upgradeSheet),
 		AW:       adultworker.New(&upgradeSheet),
-		Necro:    necronomicon.New(),
+		Necro:    necronomicon.New(&upgradeSheet),
 	}
 
 	rl.HideCursor()
