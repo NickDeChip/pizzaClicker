@@ -9,6 +9,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
 	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
+	textboxs "github.com/NickDeChip/pizzaClicker/upgrades/text_boxs"
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -35,6 +36,7 @@ func main() {
 		TW:       teen_worker.New(&upgradeSheet),
 		AW:       adultworker.New(&upgradeSheet),
 		Necro:    necronomicon.New(&upgradeSheet),
+		TextBox:  textboxs.New(),
 	}
 
 	rl.HideCursor()
@@ -53,6 +55,7 @@ func main() {
 		}
 
 		upgradeColision(enity.TW.Rec, enity.Mouse.Position, enity.TW, state)
+
 		upgradeColision(enity.AW.Rec, enity.Mouse.Position, enity.AW, state)
 
 		if state.Timer >= 1 {
@@ -67,11 +70,15 @@ func main() {
 		pizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, enity.BigPizza, state)
 		enity.BigPizza.Animation()
 
+		enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.TW.Rec, enity.TW.ShowText)
+		enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.AW.Rec, enity.AW.ShowText)
+
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.RayWhite)
 		rl.DrawTexture(state.Background, 0, 0, rl.White)
 		enity.BigPizza.Draw(state.PizzaCount)
 
+		enity.TextBox.Draw()
 		enity.TW.Draw()
 		enity.AW.Draw()
 		enity.Necro.Draw()
