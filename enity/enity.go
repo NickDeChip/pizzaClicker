@@ -7,6 +7,8 @@ import (
 	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
 	"github.com/NickDeChip/pizzaClicker/upgrades/text_boxs"
+	"github.com/NickDeChip/pizzaClicker/upgrades/zombe_aw"
+	"github.com/NickDeChip/pizzaClicker/upgrades/zombe_tw"
 )
 
 type Enity struct {
@@ -14,6 +16,8 @@ type Enity struct {
 	Mouse    *mouse.Mouse
 	TW       *teen_worker.Worker
 	AW       *adultworker.Worker
+	ZTW      *zombetw.Worker
+	ZAW      *zombeaw.Worker
 	Necro    *necronomicon.Necro
 	TextBox  *textboxs.TextBox
 }

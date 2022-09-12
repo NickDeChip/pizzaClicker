@@ -48,7 +48,7 @@ func (w *Worker) Draw() {
 	rl.DrawTextureRec(*w.tex, w.iconRec, rl.NewVector2(w.x+8, w.y+13), rl.White)
 	rl.DrawText("Teen Workers", int32(w.x+100), int32(w.y+10), 24, rl.White)
 	rl.DrawText(fmt.Sprintf("Cost: %.2f", w.Cost), int32(w.x+100), int32(w.y+40), 20, rl.White)
-	rl.DrawText(fmt.Sprintf("Amount: %d", w.Count), int32(w.x+100), int32(w.y+65), 20, rl.White)
+	rl.DrawText(fmt.Sprintf("Amount: %d", w.Count), int32(w.x+100), int32(w.y+62), 20, rl.White)
 	if w.ShowText {
 		rl.DrawText("Teen Worker", 50, 120, 30, rl.LightGray)
 		rl.DrawText("This is a cheap worker,\nBut not the most efficient", 50, 160, 20, rl.LightGray)
@@ -73,7 +73,7 @@ func (w *Worker) GetCost() float64 {
 }
 
 func (w *Worker) IncrementCost() {
-	w.Cost *= 1.1
+	w.Cost *= 1.15
 }
 
 func (w *Worker) IncrementCount() {

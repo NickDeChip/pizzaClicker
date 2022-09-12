@@ -13,7 +13,7 @@ type Necro struct {
 	y              float32
 	Rec            rl.Rectangle
 	iconRec        rl.Rectangle
-	isBought       bool
+	IsBought       bool
 	displayUpgrade bool
 	tex            *rl.Texture2D
 }
@@ -35,7 +35,7 @@ func (n *Necro) Setup() {
 	n.y = 0
 	n.iconRec = rl.NewRectangle(0, 63, float32(n.tex.Width/10), float32(n.tex.Height/10))
 	n.Rec = rl.NewRectangle(n.x, n.y, float32(texture.Width), float32(texture.Height))
-	n.isBought = false
+	n.IsBought = false
 	n.displayUpgrade = false
 }
 
@@ -47,16 +47,16 @@ func (n *Necro) Draw() {
 }
 
 func (n *Necro) Update(state *state.State, mouse rl.Vector2) {
-	if !n.isBought && n.displayUpgrade {
+	if !n.IsBought && n.displayUpgrade {
 		if rl.CheckCollisionPointRec(mouse, n.Rec) {
 			if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= n.Cost {
 				state.PizzaCount -= n.Cost
-				n.isBought = true
+				n.IsBought = true
 				n.displayUpgrade = false
 			}
 		}
 	}
-	if !n.displayUpgrade && !n.isBought {
+	if !n.displayUpgrade && !n.IsBought {
 		if state.TotalPizzaCount >= 700 {
 			n.displayUpgrade = true
 		}
