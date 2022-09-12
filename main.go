@@ -24,8 +24,8 @@ func main() {
 	upgradeSheet := rl.LoadTexture("Resources/upgradespritesheet.png")
 
 	state := &state.State{
-		PizzaCount:      0,
-		TotalPizzaCount: 0,
+		PizzaCount:      1000,
+		TotalPizzaCount: 1000,
 		FPScap:          true,
 		Background:      rl.LoadTexture("Resources/PizzaClickerBackground.png"),
 		DT:              rl.GetFrameTime(),
@@ -61,12 +61,16 @@ func main() {
 		upgradeColision(enity.TW.Rec, enity.Mouse.Position, enity.TW, state)
 		upgradeColision(enity.AW.Rec, enity.Mouse.Position, enity.AW, state)
 
-		enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.TW.Rec, enity.TW.ShowText)
-		enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.AW.Rec, enity.AW.ShowText)
+		enity.TextBox.Update()
+
+		enity.TW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.TW.Rec)
+		enity.AW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.AW.Rec)
 
 		if enity.Necro.IsBought {
 			upgradeColision(enity.ZTW.Rec, enity.Mouse.Position, enity.ZTW, state)
 			upgradeColision(enity.ZAW.Rec, enity.Mouse.Position, enity.ZAW, state)
+			enity.ZTW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.ZTW.Rec)
+			enity.ZAW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.ZAW.Rec)
 		}
 
 		enity.Necro.Update(state, enity.Mouse.Position)

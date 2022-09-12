@@ -40,14 +40,13 @@ func (t *TextBox) Draw() {
 }
 
 func (t *TextBox) Update() {
+	t.ShowBox = false
 }
 
-func (t *TextBox) CollisionCheck(mouse rl.Vector2, uRec rl.Rectangle, ShowText bool) {
+func (t *TextBox) CollisionCheck(mouse rl.Vector2, uRec rl.Rectangle) bool {
 	if rl.CheckCollisionPointRec(mouse, uRec) {
-		ShowText = true
 		t.ShowBox = true
-	} else {
-		ShowText = false
-		t.ShowBox = false
+		return true
 	}
+	return false
 }
