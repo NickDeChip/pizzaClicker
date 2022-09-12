@@ -24,8 +24,8 @@ func main() {
 	upgradeSheet := rl.LoadTexture("Resources/upgradespritesheet.png")
 
 	state := &state.State{
-		PizzaCount:      1000,
-		TotalPizzaCount: 1000,
+		PizzaCount:      0,
+		TotalPizzaCount: 0,
 		FPScap:          true,
 		Background:      rl.LoadTexture("Resources/PizzaClickerBackground.png"),
 		DT:              rl.GetFrameTime(),
