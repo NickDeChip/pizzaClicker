@@ -34,9 +34,9 @@ func New(US *rl.Texture2D) *Worker {
 
 func (w *Worker) Setup() {
 	w.Count = 0
-	w.Gain = 7
+	w.Gain = 5
 	w.TotalGain = 0
-	w.Cost = 1000
+	w.Cost = 750
 	w.x = 437
 	w.y = 180
 	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))

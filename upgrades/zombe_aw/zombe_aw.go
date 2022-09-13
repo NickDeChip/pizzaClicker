@@ -36,7 +36,7 @@ func (w *Worker) Setup() {
 	w.Count = 0
 	w.Gain = 10
 	w.TotalGain = 0
-	w.Cost = 2500
+	w.Cost = 1500
 	w.x = 437
 	w.y = 270
 	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))

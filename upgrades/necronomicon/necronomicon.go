@@ -1,6 +1,8 @@
 package necronomicon
 
 import (
+	"fmt"
+
 	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/gen2brain/raylib-go/raylib"
 )
@@ -14,8 +16,9 @@ type Necro struct {
 	Rec            rl.Rectangle
 	iconRec        rl.Rectangle
 	IsBought       bool
-	displayUpgrade bool
+	DisplayUpgrade bool
 	tex            *rl.Texture2D
+	ShowText       bool
 }
 
 func New(US *rl.Texture2D) *Necro {
@@ -36,29 +39,35 @@ func (n *Necro) Setup() {
 	n.iconRec = rl.NewRectangle(0, 63, float32(n.tex.Width/10), float32(n.tex.Height/10))
 	n.Rec = rl.NewRectangle(n.x, n.y, float32(texture.Width), float32(texture.Height))
 	n.IsBought = false
-	n.displayUpgrade = false
+	n.DisplayUpgrade = false
+	n.ShowText = false
 }
 
 func (n *Necro) Draw() {
-	if n.displayUpgrade {
+	if n.DisplayUpgrade {
 		rl.DrawTexture(*texture, int32(n.x), int32(n.y), rl.White)
 		rl.DrawTextureRec(*n.tex, n.iconRec, rl.NewVector2(n.x-18, n.y-11), rl.White)
+		if n.ShowText {
+			rl.DrawText("Necronicon", 30, 120, 30, rl.LightGray)
+			rl.DrawText("A magic book that turns workers\ninto ZOMBES!", 30, 160, 20, rl.LightGray)
+			rl.DrawText(fmt.Sprintf("Costs %.0f pizzas", n.Cost), 30, 220, 20, rl.LightGray)
+		}
 	}
 }
 
 func (n *Necro) Update(state *state.State, mouse rl.Vector2) {
-	if !n.IsBought && n.displayUpgrade {
+	if !n.IsBought && n.DisplayUpgrade {
 		if rl.CheckCollisionPointRec(mouse, n.Rec) {
 			if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= n.Cost {
 				state.PizzaCount -= n.Cost
 				n.IsBought = true
-				n.displayUpgrade = false
+				n.DisplayUpgrade = false
 			}
 		}
 	}
-	if !n.displayUpgrade && !n.IsBought {
+	if !n.DisplayUpgrade && !n.IsBought {
 		if state.TotalPizzaCount >= 700 {
-			n.displayUpgrade = true
+			n.DisplayUpgrade = true
 		}
 	}
 }

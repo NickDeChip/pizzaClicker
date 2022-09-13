@@ -73,6 +73,10 @@ func main() {
 			enity.ZAW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.ZAW.Rec)
 		}
 
+		if !enity.Necro.IsBought && enity.Necro.DisplayUpgrade {
+			enity.Necro.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Necro.Rec)
+		}
+
 		enity.Necro.Update(state, enity.Mouse.Position)
 
 		if state.Timer >= 1 {
