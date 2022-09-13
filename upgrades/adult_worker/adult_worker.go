@@ -38,7 +38,7 @@ func (w *Worker) Setup() {
 	w.TotalGain = 0
 	w.Cost = 100
 	w.x = 437
-	w.y = 80
+	w.y = 90
 	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))
 	w.iconRec = rl.NewRectangle(160, 0, float32(w.tex.Width/10), float32(w.tex.Height/10))
 	w.ShowText = false
@@ -51,12 +51,12 @@ func (w *Worker) Draw() {
 	rl.DrawText(fmt.Sprintf("Cost: %.2f", w.Cost), int32(w.x+100), int32(w.y+40), 20, rl.White)
 	rl.DrawText(fmt.Sprintf("Amount: %d", w.Count), int32(w.x+100), int32(w.y+62), 20, rl.White)
 	if w.ShowText {
-		rl.DrawText("Adult Worker", 50, 120, 30, rl.LightGray)
-		rl.DrawText("This is a good worker,\nbut is allways laking energy", 50, 160, 20, rl.LightGray)
-		rl.DrawText(fmt.Sprintf("Creates %.1f persecond", w.Gain), 50, 220, 20, rl.LightGray)
+		rl.DrawText("Adult Worker", 30, 120, 30, rl.LightGray)
+		rl.DrawText("This is a good worker,\nbut is allways laking energy", 30, 160, 20, rl.LightGray)
+		rl.DrawText(fmt.Sprintf("Creates %.1f PizzasPerSecond", w.Gain), 30, 220, 20, rl.LightGray)
 		if w.Count >= 1 {
-			rl.DrawText(fmt.Sprintf("You get %.1f PizzasPerSecond", w.Gain*float64(w.Count)), 50, 260, 20, rl.LightGray)
-			rl.DrawText(fmt.Sprintf("You have made a total of %.1f", w.TotalGain), 50, 290, 20, rl.LightGray)
+			rl.DrawText(fmt.Sprintf("You Gain %.1f PPS from this worker", w.Gain*float64(w.Count)), 30, 260, 18, rl.LightGray)
+			rl.DrawText(fmt.Sprintf("You have made a total of %.1f \npizzas From this worker", w.TotalGain), 30, 290, 18, rl.LightGray)
 		}
 	}
 }
