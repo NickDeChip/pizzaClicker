@@ -2,6 +2,7 @@ package pizza
 
 import (
 	"fmt"
+	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/NickDeChip/pizzaClicker/upgrades/pizza_oven"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -75,5 +76,15 @@ func (p *Pizza) Animation() {
 		}
 
 		p.Rec.X = ((p.Rec.Width) * float32(p.currentPizzaFrame))
+	}
+}
+
+func (p *Pizza) PizzaColision(prec rl.Rectangle, mouse rl.Vector2, state *state.State) {
+	if rl.CheckCollisionPointRec(mouse, prec) {
+		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
+			state.PizzaCount += 1 * p.PizzaClickMultiplyer
+			state.TotalPizzaCount += 1 * p.PizzaClickMultiplyer
+			p.IsPizzaClicked = true
+		}
 	}
 }

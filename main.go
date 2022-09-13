@@ -8,6 +8,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
 	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
+	"github.com/NickDeChip/pizzaClicker/upgrades/pizza_oven"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
 	textboxs "github.com/NickDeChip/pizzaClicker/upgrades/text_boxs"
 	"github.com/NickDeChip/pizzaClicker/upgrades/zombe_aw"
@@ -40,6 +41,7 @@ func main() {
 		ZTW:      zombetw.New(&upgradeSheet),
 		ZAW:      zombeaw.New(&upgradeSheet),
 		Necro:    necronomicon.New(&upgradeSheet),
+		PO:       pizzaoven.New(&upgradeSheet),
 		TextBox:  textboxs.New(),
 	}
 
@@ -58,8 +60,8 @@ func main() {
 			}
 		}
 
-		upgradeColision(enity.TW.Rec, enity.Mouse.Position, enity.TW, state)
-		upgradeColision(enity.AW.Rec, enity.Mouse.Position, enity.AW, state)
+		upgrades.UpgradeColision(enity.TW.Rec, enity.Mouse.Position, enity.TW, state)
+		upgrades.UpgradeColision(enity.AW.Rec, enity.Mouse.Position, enity.AW, state)
 
 		enity.TextBox.Update()
 
@@ -67,8 +69,8 @@ func main() {
 		enity.AW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.AW.Rec)
 
 		if enity.Necro.IsBought {
-			upgradeColision(enity.ZTW.Rec, enity.Mouse.Position, enity.ZTW, state)
-			upgradeColision(enity.ZAW.Rec, enity.Mouse.Position, enity.ZAW, state)
+			upgrades.UpgradeColision(enity.ZTW.Rec, enity.Mouse.Position, enity.ZTW, state)
+			upgrades.UpgradeColision(enity.ZAW.Rec, enity.Mouse.Position, enity.ZAW, state)
 			enity.ZTW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.ZTW.Rec)
 			enity.ZAW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.ZAW.Rec)
 		}
@@ -77,7 +79,13 @@ func main() {
 			enity.Necro.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Necro.Rec)
 		}
 
+		if !enity.PO.IsBought && enity.PO.DisplayUpgrade {
+			enity.PO.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.PO.Rec)
+		}
+
 		enity.Necro.Update(state, enity.Mouse.Position)
+		enity.PO.Update(state, enity.Mouse.Position)
+		enity.BigPizza.Update(enity.PO)
 
 		if state.Timer >= 1 {
 			enity.TW.Update(state)
@@ -89,7 +97,7 @@ func main() {
 		}
 
 		enity.Mouse.Update()
-		pizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, enity.BigPizza, state)
+		enity.BigPizza.PizzaColision(enity.BigPizza.Crec, enity.Mouse.Position, state)
 		enity.BigPizza.Animation()
 
 		rl.BeginDrawing()
@@ -101,6 +109,7 @@ func main() {
 		enity.TW.Draw()
 		enity.AW.Draw()
 		enity.Necro.Draw()
+		enity.PO.Draw()
 
 		if enity.Necro.IsBought {
 			enity.ZTW.Draw()
@@ -112,26 +121,4 @@ func main() {
 		rl.EndDrawing()
 	}
 	rl.CloseWindow()
-}
-
-func pizzaColision(prec rl.Rectangle, mouse rl.Vector2, p *pizza.Pizza, state *state.State) {
-	if rl.CheckCollisionPointRec(mouse, prec) {
-		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
-			state.PizzaCount += 1
-			state.TotalPizzaCount += 1
-			p.IsPizzaClicked = true
-		}
-	}
-}
-
-func upgradeColision(urec rl.Rectangle, mouse rl.Vector2, u upgrades.Upgradable, state *state.State) {
-	if rl.CheckCollisionPointRec(mouse, urec) {
-		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
-			if state.PizzaCount >= u.GetCost() {
-				state.PizzaCount -= u.GetCost()
-				u.IncrementCount()
-				u.IncrementCost()
-			}
-		}
-	}
 }
