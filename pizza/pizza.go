@@ -2,24 +2,25 @@ package pizza
 
 import (
 	"fmt"
-
+	"github.com/NickDeChip/pizzaClicker/upgrades/pizza_oven"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 var pizzaTexture *rl.Texture2D
 
 type Pizza struct {
-	x                 float32
-	y                 float32
-	width             float32
-	height            float32
-	clickCount        int
-	Rec               rl.Rectangle
-	Crec              rl.Rectangle
-	MainPizza         float64
-	animationspeed    float32
-	currentPizzaFrame int
-	IsPizzaClicked    bool
+	x                    float32
+	y                    float32
+	width                float32
+	height               float32
+	PizzaClickMultiplyer float64
+	clickCount           int
+	Rec                  rl.Rectangle
+	Crec                 rl.Rectangle
+	MainPizza            float64
+	animationspeed       float32
+	currentPizzaFrame    int
+	IsPizzaClicked       bool
 }
 
 func New() *Pizza {
@@ -37,6 +38,7 @@ func (p *Pizza) Setup() {
 	p.y = 150
 	p.width = float32(pizzaTexture.Width)
 	p.height = float32(pizzaTexture.Height)
+	p.PizzaClickMultiplyer = 1
 	p.clickCount = 0
 	p.Rec = rl.NewRectangle(0, 0, p.width/4, p.height)
 	p.Crec = rl.NewRectangle(p.x, p.y, p.width/4, p.height)
@@ -47,6 +49,12 @@ func (p *Pizza) Setup() {
 func (p *Pizza) Draw(pizzacount float64) {
 	rl.DrawTextureRec(*pizzaTexture, p.Rec, rl.NewVector2(p.x, p.y), rl.White)
 	rl.DrawText(fmt.Sprintf("Pizzas: %d", int64(pizzacount)), 40, 10, 50, rl.White)
+}
+
+func (p *Pizza) Update(po *pizzaoven.PizzaOven) {
+	if po.IsBought && p.PizzaClickMultiplyer == 1 {
+		p.PizzaClickMultiplyer = 2
+	}
 }
 
 func (p *Pizza) Animation() {
