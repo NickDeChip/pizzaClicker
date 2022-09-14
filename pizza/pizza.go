@@ -15,7 +15,7 @@ type Pizza struct {
 	width                float32
 	height               float32
 	PizzaClickMultiplyer float64
-	clickCount           int
+	ClickCount           float64
 	Rec                  rl.Rectangle
 	Crec                 rl.Rectangle
 	MainPizza            float64
@@ -40,7 +40,7 @@ func (p *Pizza) Setup() {
 	p.width = float32(pizzaTexture.Width)
 	p.height = float32(pizzaTexture.Height)
 	p.PizzaClickMultiplyer = 1
-	p.clickCount = 0
+	p.ClickCount = 0
 	p.Rec = rl.NewRectangle(0, 0, p.width/4, p.height)
 	p.Crec = rl.NewRectangle(p.x, p.y, p.width/4, p.height)
 	p.animationspeed = 0
@@ -84,6 +84,7 @@ func (p *Pizza) PizzaColision(prec rl.Rectangle, mouse rl.Vector2, state *state.
 		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
 			state.PizzaCount += 1 * p.PizzaClickMultiplyer
 			state.TotalPizzaCount += 1 * p.PizzaClickMultiplyer
+			p.ClickCount += 1
 			p.IsPizzaClicked = true
 		}
 	}

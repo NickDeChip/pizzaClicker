@@ -34,7 +34,7 @@ func New(US *rl.Texture2D) *PizzaOven {
 func (po *PizzaOven) Setup() {
 	po.Cost = 100
 	po.x = 388
-	po.y = 44
+	po.y = 0
 	po.iconRec = rl.NewRectangle(80, 64, float32(po.tex.Width/10), float32(po.tex.Height/10))
 	po.Rec = rl.NewRectangle(po.x, po.y, float32(texture.Width), float32(texture.Height))
 	po.IsBought = false

@@ -4,6 +4,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/enity"
 	"github.com/NickDeChip/pizzaClicker/mouse"
 	"github.com/NickDeChip/pizzaClicker/pizza"
+	"github.com/NickDeChip/pizzaClicker/setting/stats"
 	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
@@ -43,6 +44,7 @@ func main() {
 		Necro:    necronomicon.New(&upgradeSheet),
 		PO:       pizzaoven.New(&upgradeSheet),
 		TextBox:  textboxs.New(),
+		Stats:    stats.New(&upgradeSheet),
 	}
 
 	rl.HideCursor()
@@ -64,6 +66,8 @@ func main() {
 		upgrades.UpgradeColision(enity.AW.Rec, enity.Mouse.Position, enity.AW, state)
 
 		enity.TextBox.Update()
+
+		enity.Stats.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Stats.Rec)
 
 		enity.TW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.TW.Rec)
 		enity.AW.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.AW.Rec)
@@ -106,6 +110,7 @@ func main() {
 		enity.BigPizza.Draw(state.PizzaCount)
 
 		enity.TextBox.Draw()
+		enity.Stats.Draw(state, *enity.BigPizza)
 		enity.TW.Draw()
 		enity.AW.Draw()
 		enity.Necro.Draw()

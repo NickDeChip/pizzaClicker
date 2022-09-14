@@ -3,6 +3,7 @@ package enity
 import (
 	"github.com/NickDeChip/pizzaClicker/mouse"
 	"github.com/NickDeChip/pizzaClicker/pizza"
+	"github.com/NickDeChip/pizzaClicker/setting/stats"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
 	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/pizza_oven"
@@ -22,4 +23,5 @@ type Enity struct {
 	Necro    *necronomicon.Necro
 	PO       *pizzaoven.PizzaOven
 	TextBox  *textboxs.TextBox
+	Stats    *stats.Stats
 }

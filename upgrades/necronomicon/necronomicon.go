@@ -2,7 +2,6 @@ package necronomicon
 
 import (
 	"fmt"
-
 	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/gen2brain/raylib-go/raylib"
 )
@@ -35,7 +34,7 @@ func New(US *rl.Texture2D) *Necro {
 func (n *Necro) Setup() {
 	n.Cost = 1000
 	n.x = 388
-	n.y = 0
+	n.y = 90
 	n.iconRec = rl.NewRectangle(0, 64, float32(n.tex.Width/10), float32(n.tex.Height/10))
 	n.Rec = rl.NewRectangle(n.x, n.y, float32(texture.Width), float32(texture.Height))
 	n.IsBought = false

@@ -38,7 +38,7 @@ func (w *Worker) Setup() {
 	w.TotalGain = 0
 	w.Cost = 1500
 	w.x = 437
-	w.y = 270
+	w.y = 271
 	w.Rec = rl.NewRectangle(w.x, w.y, float32(texture.Width), float32(texture.Height))
 	w.iconRec = rl.NewRectangle(240, 0, float32(w.tex.Width/10), float32(w.tex.Height/10))
 	w.ShowText = false
