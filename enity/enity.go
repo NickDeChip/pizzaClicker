@@ -5,6 +5,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/pizza"
 	"github.com/NickDeChip/pizzaClicker/setting/stats"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
+	"github.com/NickDeChip/pizzaClicker/upgrades/aprons"
 	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/pizza_oven"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
@@ -22,6 +23,7 @@ type Enity struct {
 	ZAW      *zombeaw.Worker
 	Necro    *necronomicon.Necro
 	PO       *pizzaoven.PizzaOven
+	Aprons   *aprons.Aprons
 	TextBox  *textboxs.TextBox
 	Stats    *stats.Stats
 }

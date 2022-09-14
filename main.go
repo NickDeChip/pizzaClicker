@@ -8,6 +8,7 @@ import (
 	"github.com/NickDeChip/pizzaClicker/state"
 	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/NickDeChip/pizzaClicker/upgrades/adult_worker"
+	"github.com/NickDeChip/pizzaClicker/upgrades/aprons"
 	"github.com/NickDeChip/pizzaClicker/upgrades/necronomicon"
 	"github.com/NickDeChip/pizzaClicker/upgrades/pizza_oven"
 	"github.com/NickDeChip/pizzaClicker/upgrades/teen_worker"
@@ -26,8 +27,8 @@ func main() {
 	upgradeSheet := rl.LoadTexture("Resources/upgradespritesheet.png")
 
 	state := &state.State{
-		PizzaCount:      0,
-		TotalPizzaCount: 0,
+		PizzaCount:      10000,
+		TotalPizzaCount: 10000,
 		FPScap:          true,
 		Background:      rl.LoadTexture("Resources/PizzaClickerBackground.png"),
 		DT:              rl.GetFrameTime(),
@@ -43,6 +44,7 @@ func main() {
 		ZAW:      zombeaw.New(&upgradeSheet),
 		Necro:    necronomicon.New(&upgradeSheet),
 		PO:       pizzaoven.New(&upgradeSheet),
+		Aprons:   aprons.New(&upgradeSheet),
 		TextBox:  textboxs.New(),
 		Stats:    stats.New(&upgradeSheet),
 	}
@@ -87,13 +89,18 @@ func main() {
 			enity.PO.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.PO.Rec)
 		}
 
-		enity.Necro.Update(state, enity.Mouse.Position)
+		if !enity.Aprons.IsApronBought && enity.Aprons.DisplayUpgradeApron {
+			enity.Aprons.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Aprons.Rec)
+		}
+
 		enity.PO.Update(state, enity.Mouse.Position)
+		enity.Aprons.Update(state, enity.Mouse.Position)
+		enity.Necro.Update(state, enity.Mouse.Position)
 		enity.BigPizza.Update(enity.PO)
 
 		if state.Timer >= 1 {
-			enity.TW.Update(state)
-			enity.AW.Update(state)
+			enity.TW.Update(state, enity.Aprons)
+			enity.AW.Update(state, enity.Aprons)
 			enity.ZTW.Update(state)
 			enity.ZAW.Update(state)
 
@@ -113,8 +120,10 @@ func main() {
 		enity.Stats.Draw(state, *enity.BigPizza)
 		enity.TW.Draw()
 		enity.AW.Draw()
-		enity.Necro.Draw()
+
 		enity.PO.Draw()
+		enity.Aprons.Draw()
+		enity.Necro.Draw()
 
 		if enity.Necro.IsBought {
 			enity.ZTW.Draw()

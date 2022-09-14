@@ -34,7 +34,7 @@ func (s *Stats) SetUp() {
 	s.x = 10
 	s.y = 66
 	s.Rec = rl.NewRectangle(float32(s.x), float32(s.y), float32(texture.Width), float32(texture.Height))
-	s.IconRec = rl.NewRectangle(160, 64, float32(s.tex.Height/10), float32(s.tex.Width/10))
+	s.IconRec = rl.NewRectangle(0, 256, float32(s.tex.Height/10), float32(s.tex.Width/10))
 	s.ShowText = false
 }
 

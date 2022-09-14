@@ -3,6 +3,7 @@ package adultworker
 import (
 	"fmt"
 	"github.com/NickDeChip/pizzaClicker/state"
+	"github.com/NickDeChip/pizzaClicker/upgrades/aprons"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -61,11 +62,14 @@ func (w *Worker) Draw() {
 	}
 }
 
-func (w *Worker) Update(state *state.State) {
+func (w *Worker) Update(state *state.State, a *aprons.Aprons) {
 	if w.Count >= 1 {
 		state.PizzaCount += w.Gain * float64(w.Count)
 		state.TotalPizzaCount += w.Gain * float64(w.Count)
 		w.TotalGain += w.Gain * float64(w.Count)
+	}
+	if a.IsApronBought && w.Gain == 0.1 {
+		w.Gain = w.Gain * 2
 	}
 }
 
