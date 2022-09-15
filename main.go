@@ -90,7 +90,11 @@ func main() {
 		}
 
 		if !enity.Aprons.IsApronBought && enity.Aprons.DisplayUpgradeApron {
-			enity.Aprons.ShowText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Aprons.Rec)
+			enity.Aprons.ShowApronText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Aprons.Rec)
+		}
+
+		if !enity.Aprons.IsSABought && enity.Aprons.DisplayUpgradeSA {
+			enity.Aprons.ShowSAText = enity.TextBox.CollisionCheck(enity.Mouse.Position, enity.Aprons.Rec)
 		}
 
 		enity.PO.Update(state, enity.Mouse.Position)

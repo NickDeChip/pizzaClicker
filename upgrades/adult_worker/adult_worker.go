@@ -68,11 +68,12 @@ func (w *Worker) Update(state *state.State, a *aprons.Aprons) {
 		state.TotalPizzaCount += w.Gain * float64(w.Count)
 		w.TotalGain += w.Gain * float64(w.Count)
 	}
-	if a.IsApronBought && w.Gain == 0.1 {
+	if a.IsApronBought && w.Gain == 1 {
+		w.Gain = w.Gain * 2
+	} else if a.IsSABought && w.Gain == 2 {
 		w.Gain = w.Gain * 2
 	}
 }
-
 func (w *Worker) GetCost() float64 {
 	return w.Cost
 }

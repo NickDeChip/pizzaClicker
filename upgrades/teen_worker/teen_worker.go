@@ -69,6 +69,8 @@ func (w *Worker) Update(state *state.State, a *aprons.Aprons) {
 	}
 	if a.IsApronBought && w.Gain == 0.1 {
 		w.Gain = w.Gain * 2
+	} else if a.IsSABought && w.Gain == 0.2 {
+		w.Gain = w.Gain * 2
 	}
 }
 
