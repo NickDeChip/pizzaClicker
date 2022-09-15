@@ -3,6 +3,7 @@ package necronomicon
 import (
 	"fmt"
 	"github.com/NickDeChip/pizzaClicker/state"
+	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -55,15 +56,14 @@ func (n *Necro) Draw() {
 }
 
 func (n *Necro) Update(state *state.State, mouse rl.Vector2) {
-	if !n.IsBought && n.DisplayUpgrade {
-		if rl.CheckCollisionPointRec(mouse, n.Rec) {
-			if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= n.Cost {
-				state.PizzaCount -= n.Cost
-				n.IsBought = true
-				n.DisplayUpgrade = false
-			}
+	if upgrades.PowerUpColision(n.DisplayUpgrade, n.IsBought, mouse, n.Rec) {
+		if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= n.Cost {
+			state.PizzaCount -= n.Cost
+			n.IsBought = true
+			n.DisplayUpgrade = false
 		}
 	}
+
 	if !n.DisplayUpgrade && !n.IsBought {
 		if state.TotalPizzaCount >= 700 {
 			n.DisplayUpgrade = true

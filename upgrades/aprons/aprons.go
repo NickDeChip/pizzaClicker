@@ -38,7 +38,7 @@ func New(US *rl.Texture2D) *Aprons {
 
 func (a *Aprons) Setup() {
 	a.Cost = 250
-	a.SACost = 500
+	a.SACost = 900
 	a.x = 388
 	a.y = 45
 	a.iconRec = rl.NewRectangle(0, 192, float32(a.tex.Width/10), float32(a.tex.Height/10))
@@ -62,7 +62,7 @@ func (a *Aprons) Draw() {
 		if a.ShowSAText {
 			rl.DrawText("Silver Aprons", 30, 120, 30, rl.LightGray)
 			rl.DrawText("Richer workers work harder\nfor the same price\nDoubles efficiency Of workers!", 30, 160, 20, rl.LightGray)
-			rl.DrawText(fmt.Sprintf("Costs %.0f pizzas", a.Cost), 30, 250, 20, rl.LightGray)
+			rl.DrawText(fmt.Sprintf("Costs %.0f pizzas", a.SACost), 30, 250, 20, rl.LightGray)
 		}
 	}
 }
@@ -93,7 +93,7 @@ func (a *Aprons) Update(state *state.State, mouse rl.Vector2) {
 	}
 
 	if !a.DisplayUpgradeSA && a.IsApronBought && !a.IsSABought {
-		if state.TotalPizzaCount >= 1000 {
+		if state.TotalPizzaCount >= 700 {
 			a.DisplayUpgradeSA = true
 			a.iconRec = rl.NewRectangle(80, 192, float32(a.tex.Width/10), float32(a.tex.Height/10))
 		}

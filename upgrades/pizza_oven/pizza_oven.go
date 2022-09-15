@@ -3,6 +3,7 @@ package pizzaoven
 import (
 	"fmt"
 	"github.com/NickDeChip/pizzaClicker/state"
+	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -55,15 +56,14 @@ func (po *PizzaOven) Draw() {
 }
 
 func (po *PizzaOven) Update(state *state.State, mouse rl.Vector2) {
-	if !po.IsBought && po.DisplayUpgrade {
-		if rl.CheckCollisionPointRec(mouse, po.Rec) {
-			if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= po.Cost {
-				state.PizzaCount -= po.Cost
-				po.IsBought = true
-				po.DisplayUpgrade = false
-			}
+	if upgrades.PowerUpColision(po.DisplayUpgrade, po.IsBought, mouse, po.Rec) {
+		if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= po.Cost {
+			state.PizzaCount -= po.Cost
+			po.IsBought = true
+			po.DisplayUpgrade = false
 		}
 	}
+
 	if !po.DisplayUpgrade && !po.IsBought {
 		if state.TotalPizzaCount >= 70 {
 			po.DisplayUpgrade = true
