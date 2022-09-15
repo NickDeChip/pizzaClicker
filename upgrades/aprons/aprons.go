@@ -3,6 +3,7 @@ package aprons
 import (
 	"fmt"
 	"github.com/NickDeChip/pizzaClicker/state"
+	"github.com/NickDeChip/pizzaClicker/upgrades"
 	"github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -67,39 +68,34 @@ func (a *Aprons) Draw() {
 }
 
 func (a *Aprons) Update(state *state.State, mouse rl.Vector2) {
-	if !a.IsApronBought {
-		if a.DisplayUpgradeApron {
-			if rl.CheckCollisionPointRec(mouse, a.Rec) {
-				if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= a.Cost {
-					state.PizzaCount -= a.Cost
-					a.DisplayUpgradeApron = false
-					a.ShowApronText = false
-					a.IsApronBought = true
-				}
-			}
-		}
-		if !a.DisplayUpgradeApron && !a.IsApronBought {
-			if state.TotalPizzaCount >= 100 {
-				a.DisplayUpgradeApron = true
-			}
+	if upgrades.PowerUpColision(a.DisplayUpgradeApron, a.IsApronBought, mouse, a.Rec) {
+		if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= a.Cost {
+			state.PizzaCount -= a.Cost
+			a.DisplayUpgradeApron = false
+			a.ShowApronText = false
+			a.IsApronBought = true
 		}
 	}
-	if !a.IsSABought {
-		if a.DisplayUpgradeSA {
-			if rl.CheckCollisionPointRec(mouse, a.Rec) {
-				if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= a.SACost {
-					state.PizzaCount -= a.SACost
-					a.DisplayUpgradeSA = false
-					a.ShowSAText = false
-					a.IsSABought = true
-				}
-			}
+
+	if !a.DisplayUpgradeApron && !a.IsApronBought {
+		if state.TotalPizzaCount >= 100 {
+			a.DisplayUpgradeApron = true
 		}
-		if !a.DisplayUpgradeSA && a.IsApronBought && !a.IsSABought {
-			if state.TotalPizzaCount >= 1000 {
-				a.DisplayUpgradeSA = true
-				a.iconRec = rl.NewRectangle(80, 192, float32(a.tex.Width/10), float32(a.tex.Height/10))
-			}
+	}
+
+	if upgrades.PowerUpColision(a.DisplayUpgradeSA, a.IsSABought, mouse, a.Rec) {
+		if rl.IsMouseButtonPressed(rl.MouseLeftButton) && state.PizzaCount >= a.SACost {
+			state.PizzaCount -= a.SACost
+			a.DisplayUpgradeSA = false
+			a.ShowSAText = false
+			a.IsSABought = true
+		}
+	}
+
+	if !a.DisplayUpgradeSA && a.IsApronBought && !a.IsSABought {
+		if state.TotalPizzaCount >= 1000 {
+			a.DisplayUpgradeSA = true
+			a.iconRec = rl.NewRectangle(80, 192, float32(a.tex.Width/10), float32(a.tex.Height/10))
 		}
 	}
 }

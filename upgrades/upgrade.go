@@ -22,3 +22,15 @@ func UpgradeColision(urec rl.Rectangle, mouse rl.Vector2, u Upgradable, state *s
 		}
 	}
 }
+
+func PowerUpColision(IsDiplayed bool, IsBought bool, mouse rl.Vector2, rec rl.Rectangle) bool {
+	var answer bool
+	if !IsBought && IsDiplayed {
+		if rl.CheckCollisionPointRec(mouse, rec) {
+			answer = true
+		} else {
+			answer = false
+		}
+	}
+	return answer
+}

@@ -79,7 +79,7 @@ func (w *Worker) GetCost() float64 {
 }
 
 func (w *Worker) IncrementCost() {
-	w.Cost *= 1.15
+	w.Cost *= 1.07
 }
 
 func (w *Worker) IncrementCount() {
